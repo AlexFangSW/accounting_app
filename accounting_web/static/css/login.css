@@ -1,0 +1,27 @@
+div.container {
+  border: 2px solid rgba(0, 0, 0, 0.493);
+  border-radius: 5px;
+  display: grid;
+  padding: 2rem;
+}
+.title {
+  text-align: center;
+}
+form {
+  display: grid;
+  grid-template-rows: 1fr, 1fr, 0.6fr;
+  row-gap: 1rem;
+}
+body {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+div.error.err_active {
+  display: block;
+  color: red;
+}
+div.error {
+  display: none;
+}
