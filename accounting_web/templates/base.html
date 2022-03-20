@@ -31,7 +31,7 @@
   <body>
     <nav class="navbar navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
-        <div class="d-flex flex-row" style="width: 100%">
+        <div class="d-flex flex-lg-row" style="width: 100%">
           <button
             class="navbar-toggler"
             type="button"
@@ -44,7 +44,10 @@
           <a class="navbar-brand border-end pe-2 ms-1" href="{% url 'home' %}"
             >Accounting App</a
           >
-          <span class="navbar-brand">{{ title }}</span>
+          <div class="flex-grow-1 justify-content-start align-items-center">
+            <div class="text-light">{{ title }}</div>
+            <div class="text-light">{{ user }}</div>
+          </div>
         </div>
 
         <div
@@ -93,7 +96,7 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid" style="width: 100vw; height: 100vh">
+    <div class="container-fluid" style="height: 100vh">
       {% block main %} {% endblock %}
     </div>
   </body>

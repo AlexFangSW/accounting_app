@@ -61,8 +61,8 @@ class Login(View):
 
 class Home(View):
     
-    def getRecords(self, userName):
-        records = Record.objects.filter(user_name__exact=userName).order_by('-date')
+    def getRecords(self, user):
+        records = Record.objects.filter(user__exact=user).order_by('-date')
         data = []
         lastMonth = 0
         firstOfMonth = False
@@ -81,9 +81,9 @@ class Home(View):
 
         return data
     
-    def addRecords(self, user_name, data):
+    def addRecords(self, user, data):
         temp = Record(
-            user_name=user_name,
+            user=user,
             activaty=data['activaty'],
             price=data['price'],
             date=data['date']
@@ -95,6 +95,7 @@ class Home(View):
     def get(self, request, *args, **kwargs):
         content = {
             'title': 'Home',
+            'user' : request.user,
             'records': self.getRecords(request.user)
         }
 
@@ -104,6 +105,7 @@ class Home(View):
         self.addRecords(request.user, request.POST)
         content = {
             'title': 'Home',
+            'user' : request.user,
             'records': self.getRecords(request.user)
         }
 
@@ -122,7 +124,8 @@ class Search(View):
 
     def get(self, request, *args, **kwargs):
         content = {
-            'title': 'Search'
+            'title': 'Search',
+            'user' : request.user,
         }
 
         return render(request, 'search.html', content)
