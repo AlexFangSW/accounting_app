@@ -14,6 +14,7 @@ class Login(View):
         content = {
             'err_active':'d-none'
         }
+        
         return render(request, 'loginForm.html', content)
 
     def post(self, request, *args, **kwargs):
@@ -23,6 +24,7 @@ class Login(View):
         if user is not None:
             login(request, user)
             # Success
+
             return redirect('home') # Use url name
         else:
             # Fail
@@ -30,12 +32,12 @@ class Login(View):
                 'err_active':'d-block',
                 'username': username
             }
+
             return render(request, 'loginForm.html', content)
 
 class Home(View):
     
     def getRecords(self):
-
         records = Record.objects.all().order_by('-date')
         data = []
         lastMonth = 0
@@ -62,6 +64,7 @@ class Home(View):
             'title': 'Home',
             'records': self.getRecords()
         }
+
         return render(request, 'home.html', content)
     
     def post(self, request, *args, **kwargs):
@@ -69,6 +72,7 @@ class Home(View):
             'title': 'Home',
             'records': self.getRecords()
         }
+
         return render(request, 'home.html', content)
 
 class SignUp(View):
@@ -77,6 +81,7 @@ class SignUp(View):
         content = {
             'title': 'Sign Up'
         }
+
         return render(request, 'signUp.html', content)
 
 class Search(View):
@@ -85,4 +90,5 @@ class Search(View):
         content = {
             'title': 'Search'
         }
+
         return render(request, 'search.html', content)
