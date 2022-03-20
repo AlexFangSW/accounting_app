@@ -4,4 +4,4 @@ from .models import Record
 # Register your models here.
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_name', 'activaty', 'price', 'time')
+    list_display = ('id', 'user_name', 'activaty', 'price', 'date')

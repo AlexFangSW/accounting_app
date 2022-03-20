@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.forms import CharField
-from django.utils import timezone
+from datetime import date
 
 # Create your models here.
 
@@ -11,7 +10,7 @@ class Record(models.Model):
     user_name = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     activaty = models.CharField(max_length=200, default='Null')
     price = models.IntegerField(default=0)
-    time = models.DateTimeField(default=timezone.now())
+    date = models.DateField(default=date.today())
 
     def __str__(self):
         return f'Accounting record : {self.activaty}'

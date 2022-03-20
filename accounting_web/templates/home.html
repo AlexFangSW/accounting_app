@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block main %}
+<div class="row">
+  <div class="col-lg-7 mt-4 mx-auto">
+    <form
+      action=""
+      method="post"
+      class="d-lg-inline-flex mt-5 p-2 bg-light"
+      style="column-gap: 0.5rem; border-radius: 0.5rem"
+    >
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="ex : 吃早餐" />
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="ex : 200" />
+        <span class="input-group-text">$</span>
+      </div>
+      <div class="input-group">
+        <div
+          class="input-group date"
+          id="datetimepicker2"
+          data-target-input="nearest"
+        >
+          <input
+            type="date"
+            class="form-control datetimepicker-input"
+            data-target="#datetimepicker2"
+          />
+        </div>
+      </div>
+      <div class="d-grid">
+        <button type="submit " class="btn btn-success btn-border">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col mx-auto text-center h4" style="color: gray">Records</div>
+</div>
+<!-- Record cards -->
+{% for record in records %}
+<div class="row mt-2" record-id="{{record.data.id}}">
+  <div class="col-lg-7 mx-auto">
+    <!-- FirstOfMonth -->
+    {% if record.firstOfMonth %}
+    <div class="row">
+      <div class="col mx-auto text-center h4" style="color: gray">
+        {{record.firstOfMonth}} 月
+      </div>
+    </div>
+    {% endif %}
+    <!-- Data -->
+    <div class="card bg-light">
+      <div class="row card-body">
+        <div class="col-3 border-end align-self-center">
+          {{record.data.activaty}}
+        </div>
+        <div class="col-3 border-end align-self-center">
+          $ {{record.data.price}}
+        </div>
+        <div class="col-3 border-end align-self-center">
+          {{record.data.date}}
+        </div>
+        <div
+          class="col d-lg-inline-flex justify-content-around align-self-center"
+        >
+          <button type="button" class="btn btn-danger">刪除</button>
+          <button type="button" class="btn btn-warning">修改</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+<script>
+  // 預設為今天
+  document.querySelector("input.datetimepicker-input").valueAsDate = new Date();
+</script>
+{% endblock %}
