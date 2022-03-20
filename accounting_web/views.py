@@ -6,13 +6,17 @@ from django.shortcuts import redirect
 
 # Create your views here.
 class Home(View):
+
     def get(self, request, *args, **kwargs):
         return HttpResponse("Home Page")
 
 class Login(View):
     
     def get(self, request, *args, **kwargs):
-        return render(request, 'logingForm.html')
+        content = {
+            'err_active':'d-none',}
+        return render(request, 'logingForm.html', content)
+
     def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
@@ -24,6 +28,6 @@ class Login(View):
         else:
             # Fail
             content = {
-                'err_active':'err_active',
+                'err_active':'d-block',
                 'username' : username}
             return render(request, 'logingForm.html', content)
