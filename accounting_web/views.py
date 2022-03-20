@@ -6,6 +6,30 @@ from django.shortcuts import redirect
 import datetime
 
 from .models import Record
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import RecordSerializer, UserSerializer
+
+from .models import Record
+
+# REST
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+class RecordViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Record.objects.all().order_by('-date')
+    serializer_class = RecordSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
 
 # Create your views here.
 class Login(View):
@@ -37,8 +61,8 @@ class Login(View):
 
 class Home(View):
     
-    def getRecords(self):
-        records = Record.objects.all().order_by('-date')
+    def getRecords(self, userName):
+        records = Record.objects.filter(user_name__exact=userName).order_by('-date')
         data = []
         lastMonth = 0
         firstOfMonth = False
@@ -55,22 +79,32 @@ class Home(View):
                     'data' : record
                 })
 
-        print(data)
-
         return data
+    
+    def addRecords(self, user_name, data):
+        temp = Record(
+            user_name=user_name,
+            activaty=data['activaty'],
+            price=data['price'],
+            date=data['date']
+        )
+        temp.save()
+
+        return
 
     def get(self, request, *args, **kwargs):
         content = {
             'title': 'Home',
-            'records': self.getRecords()
+            'records': self.getRecords(request.user)
         }
 
         return render(request, 'home.html', content)
     
     def post(self, request, *args, **kwargs):
+        self.addRecords(request.user, request.POST)
         content = {
             'title': 'Home',
-            'records': self.getRecords()
+            'records': self.getRecords(request.user)
         }
 
         return render(request, 'home.html', content)

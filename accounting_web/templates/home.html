@@ -9,10 +9,22 @@
     >
       {% csrf_token %}
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="ex : 吃早餐" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="ex : 吃早餐"
+          name="activaty"
+          required
+        />
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="ex : 200" />
+        <input
+          type="number"
+          class="form-control"
+          placeholder="ex : 200"
+          name="price"
+          required
+        />
         <span class="input-group-text">$</span>
       </div>
       <div class="input-group">
@@ -25,6 +37,7 @@
             type="date"
             class="form-control datetimepicker-input"
             data-target="#datetimepicker2"
+            name="date"
           />
         </div>
       </div>
@@ -67,8 +80,8 @@
         <div
           class="col d-lg-inline-flex justify-content-around align-self-center"
         >
-          <button type="button" class="btn btn-danger">刪除</button>
           <button type="button" class="btn btn-warning">修改</button>
+          <button type="button" class="btn btn-danger">刪除</button>
         </div>
       </div>
     </div>
@@ -78,5 +91,6 @@
 <script>
   // 預設為今天
   document.querySelector("input.datetimepicker-input").valueAsDate = new Date();
+  // Get data
 </script>
 {% endblock %}

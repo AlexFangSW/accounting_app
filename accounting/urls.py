@@ -16,9 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from rest_framework import routers
+from accounting_web import views
+
+router = routers.DefaultRouter()
+router.register('users', views.UserViewSet)
+router.register('records', views.RecordViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounting/', include('accounting_web.urls')),
     path('', RedirectView.as_view(url='accounting/login', permanent=False)),
+    path('api/', include(router.urls)),
 ]
