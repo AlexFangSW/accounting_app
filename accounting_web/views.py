@@ -49,7 +49,7 @@ class Login(View):
             login(request, user)
             # Success
 
-            return redirect('home') # Use url name
+            return redirect('home')
         else:
             # Fail
             content = {
@@ -61,27 +61,27 @@ class Login(View):
 
 class Home(View):
     
-    def getRecords(self, user):
+    def get_records(self, user):
         records = Record.objects.filter(user__exact=user).order_by('-date')
         data = []
-        lastMonth = 0
-        firstOfMonth = False
+        last_month = 0
+        first_of_month = False
 
         for record in records:
-            if record.date.month != lastMonth:
-                firstOfMonth = record.date.month
-                lastMonth = record.date.month
+            if record.date.month != last_month:
+                first_of_month = record.date.month
+                last_month = record.date.month
             else:
-                firstOfMonth = False
+                first_of_month = False
 
             data.append({
-                    'firstOfMonth' : firstOfMonth,
+                    'first_of_month' : first_of_month,
                     'data' : record
                 })
 
         return data
     
-    def addRecords(self, user, data):
+    def add_records(self, user, data):
         temp = Record(
             user=user,
             discription=data['discription'],
@@ -96,17 +96,17 @@ class Home(View):
         content = {
             'title': 'Home',
             'user' : request.user,
-            'records': self.getRecords(request.user)
+            'records': self.get_records(request.user)
         }
 
         return render(request, 'home.html', content)
     
     def post(self, request, *args, **kwargs):
-        self.addRecords(request.user, request.POST)
+        self.add_records(request.user, request.POST)
         content = {
             'title': 'Home',
             'user' : request.user,
-            'records': self.getRecords(request.user)
+            'records': self.get_records(request.user)
         }
 
         return render(request, 'home.html', content)
