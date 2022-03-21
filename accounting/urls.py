@@ -22,6 +22,7 @@ from accounting_web import views
 router = routers.DefaultRouter()
 router.register('users', views.UserViewSet)
 router.register('records', views.RecordViewSet)
+router.register('tags', views.TagViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

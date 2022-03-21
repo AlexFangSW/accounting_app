@@ -6,11 +6,11 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 import datetime
 
-from .models import Record
+from .models import Record, Tag
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import RecordSerializer, UserSerializer
+from .serializers import RecordSerializer, UserSerializer, TagSerializer
 
 from .models import Record
 
@@ -30,6 +30,15 @@ class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all().order_by('-date')
     serializer_class = RecordSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+class TagViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Tag.objects.all().order_by('tag_name')
+    serializer_class = TagSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
 
 
 # Create your views here.
@@ -108,6 +117,7 @@ class Home(View):
     def add_records(self, user: User, data: Dict[str, Any]) -> None:
         temp = Record(
             user=user,
+            tag_name=Tag.objects.filter(tag_name__exact=data['tag_name'])[0],
             discription=data['discription'],
             price=data['price'],
             date=data['date']
@@ -115,12 +125,18 @@ class Home(View):
         temp.save()
 
         return
+    
+    def get_tags(self, user: User) -> List[str]:
+        tags = Tag.objects.filter(user__exact=user).order_by('tag_name')
+        return tags
 
     def get(self, request, *args, **kwargs):
+        
         content = {
             'title': 'Home',
             'user' : request.user,
-            'records': self.get_records(request.user)
+            'records': self.get_records(request.user),
+            'tags' : self.get_tags(request.user)
         }
 
         return render(request, 'home.html', content)
@@ -130,7 +146,8 @@ class Home(View):
         content = {
             'title': 'Home',
             'user' : request.user,
-            'records': self.get_records(request.user)
+            'records': self.get_records(request.user),
+            'tags' : self.get_tags(request.user)
         }
 
         return render(request, 'home.html', content)
