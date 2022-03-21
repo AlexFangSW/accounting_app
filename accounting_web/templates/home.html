@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block main %}
 <div class="row">
-  <div class="col-lg-7 mt-4 mx-auto">
+  <div class="col-lg-10 mt-4 mx-auto">
     <form
       action=""
       method="post"
@@ -9,13 +9,30 @@
     >
       {% csrf_token %}
       <div class="input-group">
+        <span class="input-group-text">Type</span>
+        <select name="income_or_expense" class="form-control income_or_expense">
+          <option value="支出" class="expense">支出</option>
+          <option value="收入" class="income">收入</option>
+        </select>
+      </div>
+      <!-- 一次顯示一種 -->
+      <div class="input-group tags-expense">
         <span class="input-group-text">Tag</span>
         <select name="tag_name" class="form-control">
-          {% for tag in tags %}
+          {% for tag in tags.expense %}
           <option value="{{tag.tag_name}}">{{tag.tag_name}}</option>
           {% endfor %}
         </select>
       </div>
+      <div class="input-group tags-income d-none">
+        <span class="input-group-text">Tag</span>
+        <select name="" class="form-control">
+          {% for tag in tags.income %}
+          <option value="{{tag.tag_name}}">{{tag.tag_name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <!--  -->
       <div class="input-group">
         <input
           type="text"
@@ -64,7 +81,7 @@
 <!-- Record cards -->
 {% for record in records %}
 <div class="row mt-2" record-id="{{record.data.id}}">
-  <div class="col-lg-7 mx-auto">
+  <div class="col-lg-10 mx-auto">
     <!-- FirstOfMonth -->
     {% if record.first_of_month %}
     <div class="row">
@@ -74,26 +91,25 @@
     </div>
     {% endif %}
     <!-- Data -->
-    <div class="card bg-light">
-      <div class="row card-body">
-        <div class="col-2 border-end align-self-center">
-          {{record.data.tag_name}}
-        </div>
-        <div class="col-3 border-end align-self-center">
-          {{record.data.discription}}
-        </div>
-        <div class="col-2 border-end align-self-center">
-          $ {{record.data.price}}
-        </div>
-        <div class="col-3 border-end align-self-center">
-          {{record.data.date}}
-        </div>
-        <div
-          class="col d-lg-inline-flex justify-content-around align-self-center"
-        >
-          <button type="button" class="btn btn-warning">修改</button>
-          <button type="button" class="btn btn-danger">刪除</button>
-        </div>
+    <div class="row bg-light p-2 border" style="border-radius: 0.25rem">
+      <div class="col border-end align-self-center">
+        {{record.data.income_or_expense}}
+      </div>
+      <div class="col border-end align-self-center">
+        {{record.data.tag_name}}
+      </div>
+      <div class="col border-end align-self-center">
+        {{record.data.discription}}
+      </div>
+      <div class="col border-end align-self-center">
+        $ {{record.data.price}}
+      </div>
+      <div class="col border-end align-self-center">{{record.data.date}}</div>
+      <div
+        class="col d-lg-inline-flex justify-content-around align-self-center"
+      >
+        <button type="button" class="btn btn-warning">修改</button>
+        <button type="button" class="btn btn-danger">刪除</button>
       </div>
     </div>
   </div>
@@ -101,7 +117,30 @@
 {% endfor %}
 <script>
   // 預設為今天
-  document.querySelector('input.datetimepicker-input').valueAsDate = new Date();
-  // Get data
+  document.querySelector("input.datetimepicker-input").valueAsDate = new Date();
+  // 一次只顯示一種tag (支出、收入)
+  let selector = document.querySelector("select.income_or_expense");
+
+  let income_tag = document.querySelector("div.tags-income select");
+  let expense_tag = document.querySelector("div.tags-expense select");
+  let expense_tag_input = document.querySelector(
+    "div.input-group.tags-expense"
+  );
+  let income_tag_input = document.querySelector("div.input-group.tags-income");
+
+  selector.addEventListener("click", () => {
+    let current_select = selector.querySelector("option:checked").value;
+    if (current_select == "支出") {
+      expense_tag.setAttribute("name", "tag_name");
+      expense_tag_input.classList.remove("d-none");
+      income_tag.setAttribute("name", "");
+      income_tag_input.classList.add("d-none");
+    } else {
+      expense_tag.setAttribute("name", "");
+      expense_tag_input.classList.add("d-none");
+      income_tag.setAttribute("name", "tag_name");
+      income_tag_input.classList.remove("d-none");
+    }
+  });
 </script>
 {% endblock %}

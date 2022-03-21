@@ -117,6 +117,7 @@ class Home(View):
     def add_records(self, user: User, data: Dict[str, Any]) -> None:
         temp = Record(
             user=user,
+            income_or_expense=data['income_or_expense'],
             tag_name=Tag.objects.filter(tag_name__exact=data['tag_name'])[0],
             discription=data['discription'],
             price=data['price'],
@@ -126,9 +127,13 @@ class Home(View):
 
         return
     
-    def get_tags(self, user: User) -> List[str]:
+    def get_tags(self, user: User) -> Dict[str, List[Tag]]:
         tags = Tag.objects.filter(user__exact=user).order_by('tag_name')
-        return tags
+        tag_dict = {
+            'income' : tags.filter(income_or_expense__exact='收入'),
+            'expense' : tags.filter(income_or_expense__exact='支出')
+        }
+        return tag_dict
 
     def get(self, request, *args, **kwargs):
         
