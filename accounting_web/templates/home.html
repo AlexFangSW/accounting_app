@@ -9,6 +9,14 @@
     >
       {% csrf_token %}
       <div class="input-group">
+        <span class="input-group-text">Tag</span>
+        <select name="tag_name" class="form-control">
+          {% for tag in tags %}
+          <option value="{{tag.tag_name}}">{{tag.tag_name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="input-group">
         <input
           type="text"
           class="form-control"
@@ -68,10 +76,13 @@
     <!-- Data -->
     <div class="card bg-light">
       <div class="row card-body">
+        <div class="col-2 border-end align-self-center">
+          {{record.data.tag_name}}
+        </div>
         <div class="col-3 border-end align-self-center">
           {{record.data.discription}}
         </div>
-        <div class="col-3 border-end align-self-center">
+        <div class="col-2 border-end align-self-center">
           $ {{record.data.price}}
         </div>
         <div class="col-3 border-end align-self-center">
