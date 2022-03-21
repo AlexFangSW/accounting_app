@@ -1,3 +1,4 @@
+from typing import Any, Dict, List
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
@@ -64,7 +65,7 @@ class Home(View):
     Home page of the Accounting app.
     Users can add records here.
     """
-    def get_records(self, user):
+    def get_records(self, user: User) -> List[Dict[str, Any]]:
         """
         Get current user's records.And add some value for randering
         
@@ -104,7 +105,7 @@ class Home(View):
 
         return data
     
-    def add_records(self, user, data):
+    def add_records(self, user: User, data: Dict[str, Any]) -> None:
         temp = Record(
             user=user,
             discription=data['discription'],
