@@ -84,7 +84,7 @@ class Home(View):
     def addRecords(self, user, data):
         temp = Record(
             user=user,
-            activaty=data['activaty'],
+            discription=data['discription'],
             price=data['price'],
             date=data['date']
         )

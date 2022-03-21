@@ -13,7 +13,7 @@
           type="text"
           class="form-control"
           placeholder="ex : 吃早餐"
-          name="activaty"
+          name="discription"
           required
         />
       </div>
@@ -69,7 +69,7 @@
     <div class="card bg-light">
       <div class="row card-body">
         <div class="col-3 border-end align-self-center">
-          {{record.data.activaty}}
+          {{record.data.discription}}
         </div>
         <div class="col-3 border-end align-self-center">
           $ {{record.data.price}}
@@ -90,7 +90,7 @@
 {% endfor %}
 <script>
   // 預設為今天
-  document.querySelector("input.datetimepicker-input").valueAsDate = new Date();
+  document.querySelector('input.datetimepicker-input').valueAsDate = new Date();
   // Get data
 </script>
 {% endblock %}
