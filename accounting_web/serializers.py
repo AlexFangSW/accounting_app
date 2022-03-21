@@ -5,12 +5,12 @@ from rest_framework import serializers
 class RecordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Record
-        fields = ['id', 'user', 'tag_name', 'discription', 'price', 'date']
+        fields = ['id', 'user', 'income_or_expense', 'tag_name', 'discription', 'price', 'date']
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tag
-        fields = ['id', 'user', 'tag_name']
+        fields = ['id', 'user', 'income_or_expense', 'tag_name']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
