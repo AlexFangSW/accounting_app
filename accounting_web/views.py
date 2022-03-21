@@ -60,8 +60,31 @@ class Login(View):
             return render(request, 'loginForm.html', content)
 
 class Home(View):
-    
+    """
+    Home page of the Accounting app.
+    Users can add records here.
+    """
     def get_records(self, user):
+        """
+        Get current user's records.And add some value for randering
+        
+        Args:
+            user:
+                current user.
+        
+        Returns:
+            A list of record and first_of_month pairs. first_of_month is used to identify if randering record's month on top is needed.
+            example:
+                [{
+                    'first_of_month' : False,   # No need to render record's month on top.
+                    'data' : record
+                },
+                {
+                    'first_of_month' : 3,   # Will rander '3月' on top of the record.
+                    'data' : record
+                }]
+
+        """
         records = Record.objects.filter(user__exact=user).order_by('-date')
         data = []
         last_month = 0
@@ -121,6 +144,10 @@ class SignUp(View):
         return render(request, 'signUp.html', content)
 
 class Search(View):
+    """
+    Search Page.
+    For users to search records.
+    """
 
     def get(self, request, *args, **kwargs):
         content = {
