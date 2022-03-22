@@ -1,0 +1,51 @@
+{% for record in records %}
+<div class="row mt-2" record-id="{{record.data.id}}">
+  <div class="col-lg-10 mx-auto">
+    <!-- FirstOfMonth -->
+    {% if record.first_of_month %}
+    <div class="row first_of_month">
+      <div class="col mx-auto text-center h4" style="color: gray">
+        {{record.first_of_month}} 月
+      </div>
+    </div>
+    {% endif %}
+    <!-- Data -->
+    <div class="row bg-light p-2 border" style="border-radius: 0.25rem">
+      <div class="col border-end align-self-center">
+        {{record.data.income_or_expense}}
+      </div>
+      <div class="col border-end align-self-center">
+        {{record.data.tag_name}}
+      </div>
+      <div class="col border-end align-self-center">
+        {{record.data.discription}}
+      </div>
+      <div class="col border-end align-self-center">
+        $ {{record.data.price}}
+      </div>
+      <div class="col border-end align-self-center">{{record.data.date}}</div>
+      <div
+        class="col d-lg-inline-flex justify-content-around align-self-center"
+      >
+        <button type="button" class="btn btn-warning record-card-update">
+          修改
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal{{record.data.id}}"
+        >
+          刪除
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+{% include "recordCardDeleteModel.html" %} {% endfor %}
+
+<!-- loading static -->
+{% load static %}
+<script src="{% static 'js/recordCards.js' %}"></script>

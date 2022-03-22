@@ -39,8 +39,6 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-
-
 # Create your views here.
 class Login(View):
     

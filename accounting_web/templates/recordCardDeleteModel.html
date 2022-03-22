@@ -1,0 +1,64 @@
+<div
+  class="modal fade"
+  id="exampleModal{{record.data.id}}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">確定刪除</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-2" record-id="{{record.data.id}}">
+          <div class="col-lg-10 mx-auto">
+            <!-- FirstOfMonth -->
+            <div class="row">
+              <div class="col mx-auto text-center h4" style="color: gray">
+                {{record.data.date.month}} 月
+              </div>
+            </div>
+            <!-- Data -->
+            <div class="row bg-light p-2 border" style="border-radius: 0.25rem">
+              <div class="col border-end align-self-center">
+                {{record.data.income_or_expense}}
+              </div>
+              <div class="col border-end align-self-center">
+                {{record.data.tag_name}}
+              </div>
+              <div class="col border-end align-self-center">
+                {{record.data.discription}}
+              </div>
+              <div class="col border-end align-self-center">
+                $ {{record.data.price}}
+              </div>
+              <div class="col border-end align-self-center">
+                {{record.data.date}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          取消
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger record-card-delete"
+          record-id="{{record.data.id}}"
+          data-bs-dismiss="modal"
+        >
+          刪除
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
