@@ -27,7 +27,12 @@
       <div
         class="col d-lg-inline-flex justify-content-around align-self-center"
       >
-        <button type="button" class="btn btn-warning record-card-update">
+        <button
+          type="button"
+          class="btn btn-warning record-card-update"
+          data-bs-toggle="modal"
+          data-bs-target="#updateModal{{record.data.id}}"
+        >
           修改
         </button>
         <button
@@ -44,7 +49,9 @@
 </div>
 
 <!-- Delete Modal -->
-{% include "recordCardDeleteModel.html" %} {% endfor %}
+{% include "recordCardDeleteModal.html" %}
+<!-- Update Modal -->
+{% include "recordCardUpdateModal.html" %} {% endfor %}
 
 <!-- loading static -->
 {% load static %}
