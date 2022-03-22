@@ -29,7 +29,7 @@
       >
         <button
           type="button"
-          class="btn btn-warning record-card-update"
+          class="btn btn-warning "
           data-bs-toggle="modal"
           data-bs-target="#updateModal{{record.data.id}}"
         >
@@ -51,8 +51,12 @@
 <!-- Delete Modal -->
 {% include "recordCardDeleteModal.html" %}
 <!-- Update Modal -->
-{% include "recordCardUpdateModal.html" %} {% endfor %}
+{% include "recordCardUpdateModal.html" %} 
+{% endfor %}
 
 <!-- loading static -->
 {% load static %}
 <script src="{% static 'js/recordCardsDelete.js' %}"></script>
+<!-- loading static -->
+{% load static %}
+<script src="{% static 'js/recordCardsUpdate.js' %}"></script>
