@@ -105,9 +105,12 @@ class Home(View):
             else:
                 first_of_month = False
 
+            str_date = str(record.date)
+
             data.append({
                     'first_of_month' : first_of_month,
-                    'data' : record
+                    'data' : record,
+                    'str_date' : str_date
                 })
 
         return data
