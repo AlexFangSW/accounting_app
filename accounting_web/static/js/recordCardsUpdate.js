@@ -1,16 +1,4 @@
 // Update Modal
-// async function deleteRecord(recordId, crsfToken) {
-//   let res = await fetch(`http://127.0.0.1:8000/api/records/${recordId}/`, {
-//     method: 'DELETE',
-//     headers: {
-//       'X-CSRFToken': crsfToken,
-//       'Content-type': 'text/json',
-//     },
-//   });
-//
-// 'div.updateModal-{{record.data.id}}'
-// 'select.income_or_expense'
-
 async function updateRecord(recordId, crsfToken, data) {
   console.log(`http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
   let formData = new FormData();
@@ -19,14 +7,6 @@ async function updateRecord(recordId, crsfToken, data) {
   formData.append("discription", data.discription);
   formData.append("price", data.price);
   formData.append("date", data.date);
-
-  //   {
-  //     income_or_expense: `${data.type}`,
-  //     tag_name: `http://127.0.0.1:8000/api/tags/${data.tag_id}/`,
-  //     discription: `${data.discription}`,
-  //     price: data.price,
-  //     date: data.date,
-  //   },
 
   let res = await fetch(`http://127.0.0.1:8000/api/records/${recordId}/`, {
     method: "PATCH",
