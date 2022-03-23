@@ -11,19 +11,20 @@
     {% endif %}
     <!-- Data -->
     <div class="row bg-light p-2 border" style="border-radius: 0.25rem">
-      <div class="col border-end align-self-center">
+      <div class="col border-end align-self-center" id="record_data_income_or_expense_id_{{record.data.id}}">
         {{record.data.income_or_expense}}
       </div>
-      <div class="col border-end align-self-center">
+      <div class="col border-end align-self-center" id="record_data_tag_name_id_{{record.data.id}}">
         {{record.data.tag_name}}
       </div>
-      <div class="col border-end align-self-center">
+      <div class="col border-end align-self-center" id="record_data_discription_id_{{record.data.id}}">
         {{record.data.discription}}
       </div>
-      <div class="col border-end align-self-center">
+      <div class="col border-end align-self-center" id="record_data_price_id_{{record.data.id}}">
         $ {{record.data.price}}
       </div>
-      <div class="col border-end align-self-center">{{record.data.date}}</div>
+      <div class="col border-end align-self-center" id="record_data_date_id_{{record.data.id}}">{{record.data.date}}</div>
+      <!-- Buttons -->
       <div
         class="col d-lg-inline-flex justify-content-around align-self-center"
       >

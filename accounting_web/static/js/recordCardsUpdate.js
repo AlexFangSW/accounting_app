@@ -1,6 +1,6 @@
 // Update Modal
 async function updateRecord(recordId, crsfToken, data) {
-  console.log(`http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
+  // console.log(`http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
   let formData = new FormData();
   formData.append("income_or_expense", data.type);
   formData.append("tag_name", `http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
@@ -15,7 +15,15 @@ async function updateRecord(recordId, crsfToken, data) {
     },
     body: formData,
   });
-  console.log(res);
+
+  if (res.ok) {
+    console.log('Update Success !!');
+    // 更新Record顯示
+    location.reload();
+
+  }else{
+    console.log('Update Fail :(');
+  }
 }
 
 function getData(dom) {
@@ -46,8 +54,9 @@ recordUpdateModalList.forEach((element) => {
     const crsfToken = document
       .querySelector("input[name=csrfmiddlewaretoken]")
       .getAttribute("value");
-    const data = getData(document.querySelector(`div.updateModal-${recordId}`));
-    console.log(data);
+    const formDom = document.querySelector(`div.updateModal-${recordId}`);
+    const data = getData(formDom);
+
     updateRecord(recordId, crsfToken, data);
   });
 });
