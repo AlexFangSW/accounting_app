@@ -1,33 +1,22 @@
 <!-- Modal -->
-<div
-  class="modal fade updateModal-{{record.data.id}}"
-  id="updateModal{{record.data.id}}"
-  tabindex="-1"
-  aria-labelledby="updateModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade updateModal-{{record.data.id}}" id="updateModal{{record.data.id}}" tabindex="-1"
+  aria-labelledby="updateModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="updateModalLabel">修改紀錄</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <!-- Input for updating-->
-        <div class="addInputGroup">
+        <div class="addInputGroup g-2 row">
           <div class="input-group">
             <span class="input-group-text">Type</span>
-            <select
-              name="income_or_expense"
-              class="form-control income_or_expense"
-            >
-              <option value="支出" class="expense" {% if record.data.income_or_expense == "支出" %}selected{% endif %}>支出</option>
-              <option value="收入" class="income" {% if record.data.income_or_expense == "收入" %}selected{% endif %}>收入</option>
+            <select name="income_or_expense" class="form-control income_or_expense">
+              <option value="支出" class="expense" {% if record.data.income_or_expense == "支出" %}selected{% endif %}>支出
+              </option>
+              <option value="收入" class="income" {% if record.data.income_or_expense == "收入" %}selected{% endif %}>收入
+              </option>
             </select>
           </div>
           <!-- 一次顯示一種 -->
@@ -35,53 +24,38 @@
             <span class="input-group-text">Tag</span>
             <select name="tag_name" class="form-control">
               {% for tag in tags.expense %}
-                <option value="{{tag.tag_name}}" tag-id="{{tag.id}}" {% if record.data.tag_name.id == tag.id %}selected{% endif %}>{{tag.tag_name}}</option>
+              <option value="{{tag.tag_name}}" tag-id="{{tag.id}}"
+                {% if record.data.tag_name.id == tag.id %}selected{% endif %}>{{tag.tag_name}}</option>
               {% endfor %}
             </select>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+              data-bs-target="#addExpenseTagModal">+</button>
           </div>
           <div class="input-group tags-income {% if record.data.income_or_expense == "支出" %}d-none{% endif %}">
             <span class="input-group-text">Tag</span>
             <select name="" class="form-control">
               {% for tag in tags.income %}
-                <option value="{{tag.tag_name}}" tag-id="{{tag.id}}" {% if record.data.tag_name.id == tag.id %}selected{% endif %}>{{tag.tag_name}}</option>
+              <option value="{{tag.tag_name}}" tag-id="{{tag.id}}"
+                {% if record.data.tag_name.id == tag.id %}selected{% endif %}>{{tag.tag_name}}</option>
               {% endfor %}
             </select>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+              data-bs-target="#addIncomeTagModal">+</button>
           </div>
           <!--  -->
           <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="ex : 吃早餐"
-              name="discription"
-              required
-              value="{{record.data.discription}}"
-            />
+            <input type="text" class="form-control" placeholder="ex : 吃早餐" name="discription" required
+              value="{{record.data.discription}}" />
           </div>
           <div class="input-group">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="ex : 200"
-              name="price"
-              value="{{record.data.price}}"
-              required
-            />
+            <input type="number" class="form-control" placeholder="ex : 200" name="price" value="{{record.data.price}}"
+              required />
             <span class="input-group-text">$</span>
           </div>
           <div class="input-group">
-            <div
-              class="input-group date"
-              id="datetimepicker2"
-              data-target-input="nearest"
-            >
-              <input
-                type="date"
-                class="form-control datetimepicker-input"
-                data-target="#datetimepicker2"
-                name="date"
-                value="{{record.str_date}}"
-              />
+            <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+              <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="date"
+                value="{{record.str_date}}" />
             </div>
           </div>
         </div>
@@ -90,7 +64,8 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary record-card-update" record-id="{{record.data.id}}" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-primary record-card-update" record-id="{{record.data.id}}"
+          data-bs-dismiss="modal">
           Submit
         </button>
       </div>

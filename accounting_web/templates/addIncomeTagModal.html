@@ -1,0 +1,32 @@
+<div class="modal fade" id="addIncomeTagModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIncomeTagModalLabel">Income Tags</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-grid gap-3">
+                <!-- Input -->
+                <div class="row">
+                    <div class="d-grid">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">New Tag</span>
+                            <input type="text" class="form-control" placeholder="ex: buy food"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-success addIncomeTagSubmit">ADD</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <hr class="col-12">
+                    <!-- Old Tags -->
+                    {% for tag in tags.income %}
+                    <span class="btn btn-outline-primary col-lg-4 overflow-hidden">{{tag.tag_name}}</span>
+                    {% endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
