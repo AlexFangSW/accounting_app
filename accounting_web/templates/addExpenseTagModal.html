@@ -16,7 +16,8 @@
                         </div>
                     </div>
                     <div class="d-grid">
-                        <button type="button" class="btn btn-success addExpenseTagSubmit">ADD</button>
+                        <button type="button" class="btn btn-success addExpenseTagSubmit"
+                            data-bs-dismiss="modal">ADD</button>
                     </div>
                 </div>
                 <div class="row">
@@ -30,3 +31,37 @@
         </div>
     </div>
 </div>
+<script>
+    async function addExpenseTag() {
+        const newTagName = addExpenseTagModal.querySelector('input').value;
+        const userId = JSON.parse(document.getElementById('user_id').textContent)
+        const crsfToken = document.querySelector('input[name=csrfmiddlewaretoken]').getAttribute('value');
+
+        let formData = new FormData()
+        formData.append('user', `http://127.0.0.1:8000/api/users/${userId}/`);
+        formData.append('income_or_expense', '支出');
+        formData.append('tag_name', newTagName);
+
+        let res = await fetch('http://127.0.0.1:8000/api/tags/', {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": crsfToken,
+            },
+            body: formData
+        })
+        if (res.ok) {
+            console.log("addExpenseTag success");
+            location.reload();
+        } else {
+            console.log("addExpenseTag Fail");
+        }
+    }
+
+    const addExpenseTagModal = document.querySelector('div#addExpenseTagModal');
+    const addExpenseTagSubmit = addExpenseTagModal.querySelector('button.addExpenseTagSubmit');
+
+    addExpenseTagSubmit.addEventListener("click", () => {
+        addExpenseTag();
+    });
+
+</script>
