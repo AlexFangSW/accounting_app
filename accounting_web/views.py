@@ -43,6 +43,7 @@ class TagViewSet(viewsets.ModelViewSet):
 class Login(View):
     
     def get(self, request, *args, **kwargs):
+
         content = {
             'err_active':'d-none'
         }
@@ -50,9 +51,11 @@ class Login(View):
         return render(request, 'loginForm.html', content)
 
     def post(self, request, *args, **kwargs):
+
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
             # Success
@@ -81,15 +84,17 @@ class Home(View):
                 current user.
         
         Returns:
-            A list of record and first_of_month pairs. first_of_month is used to identify if randering record's month on top is needed.
+            A list of dictionary with record and info for randering.
             example:
                 [{
                     'first_of_month' : False,   # No need to render record's month on top.
                     'data' : record
+                    'str_date' : str_date
                 },
                 {
                     'first_of_month' : 3,   # Will rander '3月' on top of the record.
                     'data' : record
+                    'str_date' : str_date
                 }]
 
         """
@@ -116,6 +121,7 @@ class Home(View):
         return data
     
     def add_records(self, user: User, data: Dict[str, Any]) -> None:
+
         temp = Record(
             user=user,
             income_or_expense=data['income_or_expense'],
@@ -124,20 +130,23 @@ class Home(View):
             price=data['price'],
             date=data['date']
         )
+
         temp.save()
 
         return
     
     def get_tags(self, user: User) -> Dict[str, List[Tag]]:
+
         tags = Tag.objects.filter(user__exact=user).order_by('tag_name')
         tag_dict = {
             'income' : tags.filter(income_or_expense__exact='收入'),
             'expense' : tags.filter(income_or_expense__exact='支出')
         }
+
         return tag_dict
 
     def get(self, request, *args, **kwargs):
-        
+
         content = {
             'title': 'Home',
             'user' : request.user,
@@ -148,6 +157,7 @@ class Home(View):
         return render(request, 'home.html', content)
     
     def post(self, request, *args, **kwargs):
+
         self.add_records(request.user, request.POST)
         content = {
             'title': 'Home',
@@ -174,6 +184,7 @@ class Search(View):
     """
 
     def get(self, request, *args, **kwargs):
+        
         content = {
             'title': 'Search',
             'user' : request.user,

@@ -21,7 +21,7 @@ class Record(models.Model):
     )
 
     tag_name = models.ForeignKey('Tag', on_delete=models.CASCADE)
-    """Classification of records ex:food, income...etc"""
+    """Classification of records ex:food...etc"""
 
     discription = models.CharField(max_length=200, default='Null')
     """Further discribe the cause for this record ex:sandwich and milk"""
