@@ -2,7 +2,7 @@ from typing import Any, Dict, List
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 import datetime
 
@@ -43,6 +43,8 @@ class TagViewSet(viewsets.ModelViewSet):
 class Login(View):
     
     def get(self, request, *args, **kwargs):
+        
+        logout(request)
 
         content = {
             'err_active':'d-none'
@@ -147,6 +149,9 @@ class Home(View):
 
     def get(self, request, *args, **kwargs):
 
+        if (not request.user.is_authenticated):
+            return redirect('login')
+
         content = {
             'title': 'Home',
             'user' : request.user,
@@ -172,10 +177,35 @@ class SignUp(View):
 
     def get(self, request, *args, **kwargs):
         content = {
-            'title': 'Sign Up'
+            'title': 'Sign Up',
+            'err_active':'d-none'
         }
 
         return render(request, 'signUp.html', content)
+
+    def post(self, request, *args, **kwargs):
+
+        username = request.POST['username']
+        password = request.POST['password']
+        password_re = request.POST['password_re']
+
+        username.replace(" ", "")
+        password.replace(" ", "")
+        password_re.replace(" ", "")
+
+        if (len(password) > 0 and len(username) > 0 and password_re == password):
+
+            user = User.objects.create_user(username=username, password=password)
+
+            return redirect('login')
+        else:
+
+            content = {
+                'err_active':'d-block',
+                'username': username
+            }
+
+            return render(request, 'signUp.html', content)
 
 class Search(View):
     """
@@ -184,6 +214,9 @@ class Search(View):
     """
 
     def get(self, request, *args, **kwargs):
+
+        if (not request.user.is_authenticated):
+            return redirect('login')
         
         content = {
             'title': 'Search',
