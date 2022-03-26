@@ -1,0 +1,64 @@
+<div class="searchFormInput">
+  <form action="" method="post">
+    {% csrf_token %}
+    <div>
+      <div class="dateSearch searchFormInputGroup ">
+        <div class="input-group">
+          <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="fromDate" />
+          <span class="input-group-text">~</span>
+          <input type="date" class="form-control datetimepicker-input" min='2022-01-01' data-target="#datetimepicker2"
+            name="toDate" />
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Search</button>
+  </form>
+
+</div>
+<style>
+  div.searchFormInput {
+    display: grid;
+    width: 60vw;
+  }
+
+  div.searchFormInput form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 0.25fr;
+    row-gap: 1rem;
+  }
+
+  div.searchFormInput form>div {
+    display: grid;
+    align-items: stretch;
+    row-gap: 1rem;
+  }
+
+  div.searchFormInputGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0.5rem;
+  }
+
+  @media screen and (max-width: 992px) {
+    div.searchFormInput {
+      width: 100vw;
+    }
+
+
+  }
+</style>
+<script>
+  // 預設為今天 .valueAsDate = new Date()
+  const fromDate = document.querySelector('input[name="fromDate"]');
+  const toDate = document.querySelector('input[name="toDate"]');
+  fromDate.valueAsDate = new Date();
+  toDate.valueAsDate = new Date();
+
+  // Min date for toDate
+  fromDate.addEventListener("change", () => {
+    toDate.setAttribute('min', fromDate.value)
+    toDate.valueAsDate = fromDate.valueAsDate
+  })
+</script>

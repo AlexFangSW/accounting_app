@@ -212,6 +212,57 @@ class Search(View):
     Search Page.
     For users to search records.
     """
+    def get_search_result(self, user: User, from_date: str, to_date: str) -> List[Dict[str, Any]]:
+        """
+        Get search result for current user with date range
+
+        Returns:
+            A list of dictionary with record and info for randering.
+            example:
+                [{
+                    'first_of_month' : False,   # No need to render record's month on top.
+                    'data' : record
+                    'str_date' : str_date
+                },
+                {
+                    'first_of_month' : 3,   # Will rander '3月' on top of the record.
+                    'data' : record
+                    'str_date' : str_date
+                }]
+
+        """
+        records = Record.objects.filter(user__exact=user).filter(date__range=[from_date, to_date]).order_by('-date')
+
+        data = []
+        last_month = 0
+        first_of_month = False
+
+        for record in records:
+            if record.date.month != last_month:
+                first_of_month = record.date.month
+                last_month = record.date.month
+            else:
+                first_of_month = False
+
+            str_date = str(record.date)
+
+            data.append({
+                    'first_of_month' : first_of_month,
+                    'data' : record,
+                    'str_date' : str_date
+                })
+
+        return data
+
+    def get_tags(self, user: User) -> Dict[str, List[Tag]]:
+
+        tags = Tag.objects.filter(user__exact=user).order_by('tag_name')
+        tag_dict = {
+            'income' : tags.filter(income_or_expense__exact='收入'),
+            'expense' : tags.filter(income_or_expense__exact='支出')
+        }
+
+        return tag_dict
 
     def get(self, request, *args, **kwargs):
 
@@ -221,6 +272,17 @@ class Search(View):
         content = {
             'title': 'Search',
             'user' : request.user,
+        }
+
+        return render(request, 'search.html', content)
+    
+    def post(self, request, *args, **kwargs):
+
+        content = {
+            'title': 'Search',
+            'user' : request.user,
+            'records' : self.get_search_result(request.user, request.POST['fromDate'], request.POST['toDate']),
+            'tags' : self.get_tags(request.user)
         }
 
         return render(request, 'search.html', content)

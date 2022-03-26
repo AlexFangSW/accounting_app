@@ -1,4 +1,18 @@
 {% extends "base.html" %}
 {% block main %}
-<h1>Search</h1>
+<div class="row " style="display: grid; justify-content: center; margin-top: 5rem !important;">
+  <div class="col-lg-12">
+    {% include "searchForm.html" %}
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col mx-auto text-center h4" style="color: gray">Records</div>
+</div>
+<!-- Record cards -->
+{% include "recordCards.html" %}
+
+<!-- addTagModal -->
+{% include "addExpenseTagModal.html" %}
+{% include "addIncomeTagModal.html" %}
 {% endblock %}

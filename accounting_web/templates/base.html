@@ -19,6 +19,13 @@
   div.offcanvas-body a:hover {
     background-color: rgb(77, 77, 77);
   }
+
+  @media screen and (max-width: 992px) {
+    a.navbar-brand {
+      display: none;
+    }
+
+  }
 </style>
 
 <body>
@@ -59,7 +66,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid" style="height: 100vh">
+  <div class="container-fluid">
     {% block main %} {% endblock %}
   </div>
   {{ request.user.id|json_script:"user_id" }}
