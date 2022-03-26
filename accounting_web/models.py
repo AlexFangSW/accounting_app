@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import date
+from django.utils import timezone
 
 class Record(models.Model):
     """ 
@@ -28,7 +29,7 @@ class Record(models.Model):
 
     price = models.IntegerField(default=0)
 
-    date = models.DateField(default=date.today())
+    date = models.DateField(default=timezone.now)
 
     def __str__(self):
         return f'Accounting record : {self.discription}'
