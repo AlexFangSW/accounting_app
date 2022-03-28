@@ -38,11 +38,11 @@
         const crsfToken = document.querySelector('input[name=csrfmiddlewaretoken]').getAttribute('value');
 
         let formData = new FormData()
-        formData.append('user', `http://127.0.0.1:8000/api/users/${userId}/`);
+        formData.append('user', `${baseURL}/api/users/${userId}/`);
         formData.append('income_or_expense', '支出');
         formData.append('tag_name', newTagName);
 
-        let res = await fetch('http://127.0.0.1:8000/api/tags/', {
+        let res = await fetch(`${baseURL}/api/tags/`, {
             method: "POST",
             headers: {
                 "X-CSRFToken": crsfToken,

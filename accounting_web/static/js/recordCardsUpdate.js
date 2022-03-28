@@ -1,14 +1,14 @@
 // Update Modal
 async function updateRecord(recordId, crsfToken, data) {
-  // console.log(`http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
+  // console.log(`${baseURL}/api/tags/${data.tag_id}/`);
   let formData = new FormData();
   formData.append("income_or_expense", data.type);
-  formData.append("tag_name", `http://127.0.0.1:8000/api/tags/${data.tag_id}/`);
+  formData.append("tag_name", `${baseURL}/api/tags/${data.tag_id}/`);
   formData.append("discription", data.discription);
   formData.append("price", data.price);
   formData.append("date", data.date);
 
-  let res = await fetch(`http://127.0.0.1:8000/api/records/${recordId}/`, {
+  let res = await fetch(`${baseURL}/api/records/${recordId}/`, {
     method: "PATCH",
     headers: {
       "X-CSRFToken": crsfToken,
@@ -21,7 +21,7 @@ async function updateRecord(recordId, crsfToken, data) {
     // 更新Record顯示
     location.reload();
 
-  }else{
+  } else {
     console.log('Update Fail :(');
   }
 }
@@ -29,11 +29,10 @@ async function updateRecord(recordId, crsfToken, data) {
 function getData(dom) {
   return {
     type: `${dom.querySelector("select option:checked").value}`,
-    tag: `${
-      dom.querySelector(
-        "div[class*=input-group][class*=tags]:not(.d-none) select option:checked"
-      ).value
-    }`,
+    tag: `${dom.querySelector(
+      "div[class*=input-group][class*=tags]:not(.d-none) select option:checked"
+    ).value
+      }`,
     tag_id: `${dom
       .querySelector(
         "div[class*=input-group][class*=tags]:not(.d-none) select option:checked"

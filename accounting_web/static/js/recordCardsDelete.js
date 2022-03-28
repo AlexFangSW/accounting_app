@@ -1,6 +1,6 @@
 // Delete Modal
 async function deleteRecord(recordId, crsfToken) {
-  let res = await fetch(`http://127.0.0.1:8000/api/records/${recordId}/`, {
+  let res = await fetch(`${baseURL}/api/records/${recordId}/`, {
     method: 'DELETE',
     headers: {
       'X-CSRFToken': crsfToken,

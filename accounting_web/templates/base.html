@@ -71,5 +71,12 @@
   </div>
   {{ request.user.id|json_script:"user_id" }}
 </body>
+<script>
+  const baseURL = `${window.location.href.split('/')[0]}//${window.location.href.split('/')[2]}`
+  // Prevent re-submition
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
 
 </html>
