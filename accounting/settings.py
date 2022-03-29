@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-!za7%ynoa_-xdm6k2d3fgh%v0o0ly2m$zsl0^8*)d4yk9k#i4*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://powerful-falls-51839.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'accounting.urls'
