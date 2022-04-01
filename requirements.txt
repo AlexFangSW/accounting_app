@@ -1,4 +1,6 @@
 django==4.0.3
 djangorestframework==3.13.1
+# WSGI (Web Server Gateway Interface)
 gunicorn
+# 在Heroku要拿到 static file 需要.
 whitenoise

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!za7%ynoa_-xdm6k2d3fgh%v0o0ly2m$zsl0^8*)d4yk9k#i4*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['.herokuapp.com', '*']
 
 CSRF_TRUSTED_ORIGINS = ['https://powerful-falls-51839.herokuapp.com']
 # Application definition
@@ -122,6 +122,8 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
